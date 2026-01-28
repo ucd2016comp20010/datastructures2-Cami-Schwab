@@ -22,7 +22,8 @@ public class SinglyLinkedList<E> implements List<E> {
          * @param n reference to a node that should follow the new node
          */
         public Node(E e, Node<E> n) {
-            // TODO
+            this.element = e;
+            this.next = n;
         }
 
         // Accessor methods
@@ -33,7 +34,7 @@ public class SinglyLinkedList<E> implements List<E> {
          * @return the element stored at the node
          */
         public E getElement() {
-            return null;
+            return element;
         }
 
         /**
@@ -42,8 +43,7 @@ public class SinglyLinkedList<E> implements List<E> {
          * @return the following node
          */
         public Node<E> getNext() {
-            // TODO
-            return null;
+            return next;
         }
 
         // Modifier methods
@@ -54,7 +54,8 @@ public class SinglyLinkedList<E> implements List<E> {
          * @param n the node that should follow this one
          */
         public void setNext(Node<E> n) {
-            // TODO
+            this.next = n;
+            return;
         }
     } //----------- end of nested Node class -----------
 
@@ -74,54 +75,141 @@ public class SinglyLinkedList<E> implements List<E> {
 
     //@Override
     public int size() {
-        // TODO
-        return 0;
+        if(head == null) {
+            return 0;
+        }
+        int i = 1;
+        Node <E> last = head;
+        while (last.getNext() != null) { // advance to the last node
+            last = last.getNext();
+            i++;
+        }
+        return i;
     }
 
     //@Override
     public boolean isEmpty() {
-        // TODO
-        return false;
+        if(head == null) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     @Override
     public E get(int position) {
-        // TODO
-        return null;
+        Node <E> currentNode = head;
+        for(int i = 0; i < position; i++) {
+            currentNode = currentNode.getNext();
+        }
+        return currentNode.getElement();
     }
 
     @Override
     public void add(int position, E e) {
-        // TODO
+        if(position == 0) {
+            head = new Node<E>(e, 0);
+        }
+        Node <E> walk = head;
+        for(int i = 0; i < (position-1); i++) {
+            walk = walk.getNext();
+        }
+        Node<E> inserted = new Node<E>(e, walk.getNext());
+        walk.setNext(inserted);
+        size++;
     }
 
 
     @Override
     public void addFirst(E e) {
-        // TODO
+        head = new Node<E>(e, head); // create and link a new node
+        size++;
     }
 
     @Override
     public void addLast(E e) {
-        // TODO
+        Node<E> newest = new Node<E>(e, null); // node will eventually be the tail
+        Node<E> last = head;
+        if(last == null) {
+            head = newest;
+        }
+        else {
+            while (last.getNext() != null) { // advance to the last node
+                last = last.getNext();
+            }
+            last.setNext(newest); // new node after existing tail
+        }
+        size++;
     }
 
     @Override
     public E remove(int position) {
-        // TODO
-        return null;
+        if(head == null) {
+            return null;
+        }
+        int i = 1;
+        Node <E> last = head;
+        while (last.getNext() != null) { // advance to the last node
+            last = last.getNext();
+            i++;
+        }
+        if(!(0<=position && position<i) ) {
+            return null;
+        }
+        if(position == 0) {
+            Node<E> originalHead = head;
+            head = head.getNext();
+            size--;
+            return originalHead.getElement();
+        }
+        Node <E> a = head; //a is position before one removed
+        Node <E> b = head; //b is position being removed
+        for(int j = 0; j < (position-1); j++) {
+            a = a.getNext();
+        }
+        for(int k = 0; k < position; k++) {
+            b = b.getNext();
+        }
+        a.setNext(b.getNext());
+        size--;
+        return b.getElement();
     }
 
     @Override
     public E removeFirst() {
-        // TODO
-        return null;
+        Node<E> originalHead = head;
+        head = head.next;
+        size--;
+        return originalHead.getElement();
     }
 
     @Override
     public E removeLast() {
-        // TODO
-        return null;
+        Node<E> last = head;
+        int i = 0;
+        E r = null;
+        if(head == null) {
+            return null;
+        }
+        if(head.getNext() == null) {
+            r = head.getElement();
+            head = null;
+            size--;
+            return r;
+        }
+        while (last.getNext() != null) { // advance to the last node
+            last = last.getNext();
+            i++;
+        }
+        r = last.getElement();
+        Node<E> secondLast = head;
+        for(int j = 0; j < (i-1); j++) {
+            secondLast = secondLast.getNext();
+        }
+        secondLast.setNext(null);
+        size--;
+        return r;
     }
 
     //@Override
