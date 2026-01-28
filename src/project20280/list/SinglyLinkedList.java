@@ -55,7 +55,6 @@ public class SinglyLinkedList<E> implements List<E> {
          */
         public void setNext(Node<E> n) {
             this.next = n;
-            return;
         }
     } //----------- end of nested Node class -----------
 
@@ -99,19 +98,30 @@ public class SinglyLinkedList<E> implements List<E> {
 
     @Override
     public E get(int position) {
+        if(0 > position || position >= size) {
+            return null;
+        }
         Node <E> currentNode = head;
         for(int i = 0; i < position; i++) {
             currentNode = currentNode.getNext();
+        }
+        if(currentNode == null) {
+            return null;
         }
         return currentNode.getElement();
     }
 
     @Override
     public void add(int position, E e) {
-        if(position == 0) {
-            head = new Node<E>(e, 0);
+        if(0 > position || position > size) {
+            return;
         }
         Node <E> walk = head;
+        if(position == 0) {
+            head = new Node<E>(e, head);
+            size++;
+            return;
+        }
         for(int i = 0; i < (position-1); i++) {
             walk = walk.getNext();
         }
@@ -178,6 +188,9 @@ public class SinglyLinkedList<E> implements List<E> {
 
     @Override
     public E removeFirst() {
+        if (head == null) {
+            return null;
+        }
         Node<E> originalHead = head;
         head = head.next;
         size--;
@@ -187,7 +200,6 @@ public class SinglyLinkedList<E> implements List<E> {
     @Override
     public E removeLast() {
         Node<E> last = head;
-        int i = 0;
         E r = null;
         if(head == null) {
             return null;
@@ -198,13 +210,14 @@ public class SinglyLinkedList<E> implements List<E> {
             size--;
             return r;
         }
+        int i = 1; //length
         while (last.getNext() != null) { // advance to the last node
             last = last.getNext();
             i++;
         }
         r = last.getElement();
         Node<E> secondLast = head;
-        for(int j = 0; j < (i-1); j++) {
+        for(int j = 0; j < i-2; j++) {
             secondLast = secondLast.getNext();
         }
         secondLast.setNext(null);
