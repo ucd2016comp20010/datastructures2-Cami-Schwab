@@ -78,7 +78,7 @@ public class SinglyLinkedList<E> implements List<E> {
             return 0;
         }
         int i = 1;
-        Node <E> last = head;
+        Node<E> last = head;
         while (last.getNext() != null) { // advance to the last node
             last = last.getNext();
             i++;
