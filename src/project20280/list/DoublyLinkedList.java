@@ -97,13 +97,10 @@ public class DoublyLinkedList<E> implements List<E> {
     @Override
     public void add(int i, E e) {
         Node<E> prev = head.getNext();
-        for(int j = 0; j < i; j++) {
+        for(int j = 0; j < (i-1); j++) {
             prev = prev.getNext();
         }
-        Node<E> next = tail.getPrev();
-        for(int j = 0; j < i; j++) {
-            next = next.getPrev();
-        }
+        Node<E> next = prev.getNext();
         addBetween(e, prev, next);
         return;
     }
