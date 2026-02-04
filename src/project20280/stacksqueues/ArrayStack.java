@@ -17,7 +17,8 @@ public class ArrayStack<E> implements Stack<E> {
     /**
      * Index of the top element of the stack in the array.
      */
-    private final int t = -1;                      // index of the top element in stack
+    //private final int t = -1;                      // index of the top element in stack
+    private int t = -1;
 
     /**
      * Constructs an empty stack using the default array capacity.
@@ -33,7 +34,7 @@ public class ArrayStack<E> implements Stack<E> {
      */
     @SuppressWarnings({"unchecked"})
     public ArrayStack(int capacity) {        // constructs stack with given capacity
-        // TODO
+        data = (E[]) new Object[capacity];
     }
 
     /**
@@ -62,9 +63,21 @@ public class ArrayStack<E> implements Stack<E> {
      * @param e the element to be inserted
      * @throws IllegalStateException if the array storing the elements is full
      */
+
+
     @Override
     public void push(E e) {
-        // TODO
+        if(data.length < size()) {
+            data[++t] = e;
+        }
+        else {
+            E[] newArray = (E[]) new Object[t+2];
+            for(int i = 0; i < size(); i++) {
+                newArray[i] = data[i];
+            }
+            data = newArray;
+            data[++t] = e;
+        }
     }
 
     /**
@@ -74,8 +87,12 @@ public class ArrayStack<E> implements Stack<E> {
      */
     @Override
     public E top() {
-        // TODO
-        return null;
+        if(size()==0) {
+            return null;
+        }
+        else {
+            return(data[t]);
+        }
     }
 
     /**
@@ -85,8 +102,15 @@ public class ArrayStack<E> implements Stack<E> {
      */
     @Override
     public E pop() {
-        // TODO
-        return null;
+        if(size()==0) {
+            return null;
+        }
+        else {
+            E removed = data[t];
+            data[t] = null;
+            t--;
+            return(removed);
+        }
     }
 
     /**

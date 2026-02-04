@@ -225,72 +225,72 @@ public class SinglyLinkedList<E> implements List<E> {
         return r;
     }
 
-    //Q9
-    public SinglyLinkedList<E> sortedMerge(SinglyLinkedList<E> l2) {
-        SinglyLinkedList<E> merged = new SinglyLinkedList<E>();
-        Node<E> headA = this.head;
-        Node<E> headB = l2.head;
-        Node<E> walk = new Node<E>(null, null);
-        //assuming neither empty
-        if (headA.getElement() <= headB.getElement()) {
-            walk = headA;
-            merged.head = walk;
-            headA = headA.getNext();
-        }
-        else if (headA.getElement() > headB.getElement()) {
-            walk = headB;
-            merged.head = walk;
-            headB = headB.getNext();
-        }
-        while((headA!=null) || (headB!=null)) {
-            if(headA==null) {
-                walk.setNext(headB);
-                headB = headB.getNext();
-                walk = walk.getNext();
-            }
-            else if(headB==null) {
-                walk.setNext(headA);
-                headA = headA.getNext();
-                walk = walk.getNext();
-            }
-            else if (headA.getElement() <= headB.getElement()) {
-                walk.setNext(headA);
-                headA = headA.getNext();
-                walk = walk.getNext();
-            }
-            else if(headA.getElement() > headB.getElement()) {
-                walk.setNext(headB);
-                headB = headB.getNext();
-                walk = walk.getNext();
-            }
-        }
-        return merged;
-    }
-
-    //Q10
-    public void reverse() {
-        Node<E> prev = null;
-        Node<E> curr = head;
-        Node<E> next;
-        while(curr != null) {
-            next = curr.getNext();
-            current.setNext(prev);
-            prev = curr;
-            curr = next;
-        }
-        head = prev;
-    }
-
-    //Q11
-    public SinglyLinkedList<E> clone() {
-        SinglyLinkedList<E> twin = new SinglyLinkedList<E>();
-        Node<E> tmp = head;
-        while (tmp != null) {
-            twin.addLast(tmp.getElement());
-            tmp = tmp.next;
-        }
-        return twin;
-    }
+//    //Q9
+//    public SinglyLinkedList<E> sortedMerge(SinglyLinkedList<E> l2) {
+//        SinglyLinkedList<E> merged = new SinglyLinkedList<E>();
+//        Node<E> headA = this.head;
+//        Node<E> headB = l2.head;
+//        Node<E> walk = new Node<E>(null, null);
+//        //assuming neither empty
+//        if (headA.getElement() <= headB.getElement()) {
+//            walk = headA;
+//            merged.head = walk;
+//            headA = headA.getNext();
+//        }
+//        else if (headA.getElement() > headB.getElement()) {
+//            walk = headB;
+//            merged.head = walk;
+//            headB = headB.getNext();
+//        }
+//        while((headA!=null) || (headB!=null)) {
+//            if(headA==null) {
+//                walk.setNext(headB);
+//                headB = headB.getNext();
+//                walk = walk.getNext();
+//            }
+//            else if(headB==null) {
+//                walk.setNext(headA);
+//                headA = headA.getNext();
+//                walk = walk.getNext();
+//            }
+//            else if (headA.getElement() <= headB.getElement()) {
+//                walk.setNext(headA);
+//                headA = headA.getNext();
+//                walk = walk.getNext();
+//            }
+//            else if(headA.getElement() > headB.getElement()) {
+//                walk.setNext(headB);
+//                headB = headB.getNext();
+//                walk = walk.getNext();
+//            }
+//        }
+//        return merged;
+//    }
+//
+//    //Q10
+//    public void reverse() {
+//        Node<E> prev = null;
+//        Node<E> curr = head;
+//        Node<E> next;
+//        while(curr != null) {
+//            next = curr.getNext();
+//            current.setNext(prev);
+//            prev = curr;
+//            curr = next;
+//        }
+//        head = prev;
+//    }
+//
+//    //Q11
+//    public SinglyLinkedList<E> clone() {
+//        SinglyLinkedList<E> twin = new SinglyLinkedList<E>();
+//        Node<E> tmp = head;
+//        while (tmp != null) {
+//            twin.addLast(tmp.getElement());
+//            tmp = tmp.next;
+//        }
+//        return twin;
+//    }
 
 
     //@Override
