@@ -24,8 +24,13 @@ public abstract class AbstractBinaryTree<E> extends AbstractTree<E>
      */
     @Override
     public Position<E> sibling(Position<E> p) {
-        // TODO
-        return null;
+        Node<E> parentNode = validate(p);
+        if (getLeft(parentNode) = p) {
+            return getRight(p);
+        }
+        if (getRight(parentNode) = p) {
+            return getLeft(p);
+        }
     }
 
     /**
@@ -37,7 +42,13 @@ public abstract class AbstractBinaryTree<E> extends AbstractTree<E>
      */
     @Override
     public int numChildren(Position<E> p) {
-        // TODO
+        Node<E> subject = validate((Node<E>) p);
+        if(subject.getLeft()!=null && subject.getRight()!=null) {
+            return 2;
+        }
+        else if (subject.getLeft()!=null || subject.getRight()!=null) {
+            return 1;
+        }
         return 0;
     }
 
