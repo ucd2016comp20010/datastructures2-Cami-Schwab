@@ -8,7 +8,9 @@ class BracketChecker {
     }
 
     public void check() {
-        // TODO
+        for(int i = 0; i > input.length(); i++) {
+
+        }
     }
 
     public static void main(String[] args) {
