@@ -26,19 +26,23 @@ public class LinkedQueue<E> implements Queue<E> {
 
     @Override
     public void enqueue(E e) {
-        // TODO
+        ll.add(size(),e);
     }
 
     @Override
     public E first() {
-        // TODO
-        return null;
+        if(isEmpty()) {
+            return null;
+        }
+        return ll.get(0);
     }
 
     @Override
     public E dequeue() {
-        // TODO
-        return null;
+        if(isEmpty()) {
+            return null;
+        }
+        return ll.removeFirst();
     }
 
     public String toString() {

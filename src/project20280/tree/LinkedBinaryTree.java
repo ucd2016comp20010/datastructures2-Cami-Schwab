@@ -59,6 +59,11 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
         String[] arr = { "A", "B", "C", "D", "E", null, "F", null, null, "G", "H", null, null, null, null };
         bt.createLevelOrder(arr);
         System.out.println(bt.toBinaryTreeString());
+
+        LinkedBinaryTree <String> bt1 = new LinkedBinaryTree <>();
+        String[] arr1 = { "A", "B", "C", "D", "E", null, "F", null, null, "G", "H", null, null, null, null };
+        bt.createLevelOrder(arr1);
+        System.out.println(bt1.toBinaryTreeString());
     }
 
 
@@ -282,6 +287,7 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
                 parent.setRight(child);
             };
         }
+        size--;
         return node.getElement();
     }
 

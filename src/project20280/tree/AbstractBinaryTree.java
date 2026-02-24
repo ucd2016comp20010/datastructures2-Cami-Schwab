@@ -24,12 +24,15 @@ public abstract class AbstractBinaryTree<E> extends AbstractTree<E>
      */
     @Override
     public Position<E> sibling(Position<E> p) {
-        Node<E> parentNode = validate(p);
-        if (getLeft(parentNode) = p) {
-            return getRight(p);
+        Position<E> parentNode = parent(p);
+        if (left(parentNode) == p) {
+            return right(p);
         }
-        if (getRight(parentNode) = p) {
-            return getLeft(p);
+        if (right(parentNode) == p) {
+            return left(p);
+        }
+        else {
+            return null;
         }
     }
 
@@ -42,11 +45,10 @@ public abstract class AbstractBinaryTree<E> extends AbstractTree<E>
      */
     @Override
     public int numChildren(Position<E> p) {
-        Node<E> subject = validate((Node<E>) p);
-        if(subject.getLeft()!=null && subject.getRight()!=null) {
+        if(left(p)!=null && right(p)!=null) {
             return 2;
         }
-        else if (subject.getLeft()!=null || subject.getRight()!=null) {
+        else if (left(p)!=null || right(p)!=null) {
             return 1;
         }
         return 0;
@@ -77,7 +79,16 @@ public abstract class AbstractBinaryTree<E> extends AbstractTree<E>
      * @param snapshot a list to which results are appended
      */
     private void inorderSubtree(Position<E> p, List<Position<E>> snapshot) {
-        // TODO
+        if(p == null) {
+            return;
+        }
+        if(left(p)!=null){
+            inorderSubtree(left(p), snapshot);
+        }
+        snapshot.add(p);
+        if(right(p)!=null){
+            inorderSubtree(right(p), snapshot);
+        }
     }
 
     /**
