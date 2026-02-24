@@ -8,9 +8,30 @@ class BracketChecker {
     }
 
     public void check() {
-        for(int i = 0; i > input.length(); i++) {
-
+        LinkedStack<Character> ls = new LinkedStack<>();
+        for(int i = 0; i < input.length(); i++) {
+            char curr = input.charAt(i);
+            if(curr == '(' || curr == '{' || curr == '[') {
+                ls.push(curr);
+            }
+            if(curr == ')' || curr == '}' || curr == ']') {
+                if(ls.isEmpty()) {
+                    System.out.println("missing left delimiter error");
+                    return;
+                }
+                char popped = ls.pop();
+                if(!((popped == '(' && curr == ')') || (popped == '{' && curr == '}') || (popped == '[' && curr == ']'))) {
+                    System.out.println("matching error");
+                    return;
+                }
+            }
         }
+        if(!ls.isEmpty()) {
+            System.out.println("missing right delimiter error");
+            return;
+        }
+        System.out.println("check successful");
+        return;
     }
 
     public static void main(String[] args) {
