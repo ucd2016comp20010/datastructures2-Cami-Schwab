@@ -64,6 +64,15 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
         String[] arr1 = { "A", "B", "C", "D", "E", null, "F", null, null, "G", "H", null, null, null, null };
         bt.createLevelOrder(arr1);
         System.out.println(bt1.toBinaryTreeString());
+
+
+        Integer [] inorder= {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
+            15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30};
+        Integer [] preorder= {18, 2, 1, 14, 13, 12, 4, 3, 9, 6, 5, 8, 7, 10,
+            11, 15, 16, 17, 28, 23, 19, 22, 20, 21, 24, 27, 26, 25, 29, 30};
+        LinkedBinaryTree<Integer> bt11 = new LinkedBinaryTree<>();
+        bt11.construct(inorder, preorder);
+        System.out.println(bt11.toBinaryTreeString());
     }
 
 
@@ -325,6 +334,73 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
         }
         return p;
     }
+
+    //ADDED METHODS
+
+    int preOrderIndex = 0;
+    public void construct(E[] inorder, E[] preorder) {
+        root = constructHelper(inorder, preorder, 0,inorder.length-1, null);
+    }
+
+    private Node<E> constructHelper(E[] inorder, E[] preorder, int left, int right, Node<E> parent) {
+        if(left > right) {
+            return null;
+        }
+        E currRoot = preorder[preOrderIndex++];
+        Node<E> node = createNode(currRoot, parent, null, null);
+        size++;
+        int i = left;
+        while (!inorder[i].equals(currRoot)) {
+            i++;
+        }
+        node.setLeft(constructHelper(inorder, preorder, left, i - 1, node));
+        node.setRight(constructHelper(inorder, preorder, i + 1, right, node));
+        return node;
+    }
+
+//    public static void main(String [] args) {
+//    Integer [] inorder= {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
+//            15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30};
+//    Integer [] preorder= {18, 2, 1, 14, 13, 12, 4, 3, 9, 6, 5, 8, 7, 10,
+//            11, 15, 16, 17, 28, 23, 19, 22, 20, 21, 24, 27, 26, 25, 29, 30};
+//    LinkedBinaryTree<Integer> bt = new LinkedBinaryTree<>();
+//    bt.createPreIn(inorder, preorder);
+//    System.out.println(bt.toBinaryTreeString());
+//    }
+
+    public String rootToLeaf(int N) {
+        LinkedBinaryTree<Integer> tree = makeRandom(N);
+        ArrayList<Integer> path = new ArrayList<>();
+        ArrayList<ArrayList<Integer>> finalList = new ArrayList<>();
+        rootToLeafHelper(tree.root, path, finalList);
+        return finalList.toString();
+    }
+
+    private void rootToLeafHelper(Node<Integer> node, ArrayList<Integer> path, ArrayList<ArrayList<Integer>> finalList) {
+        if (node == null) return;
+        path.add(node.getElement());
+        if (node.getLeft() == null && node.getRight() == null) {
+            finalList.add(new ArrayList<>(path));
+        } else {
+            rootToLeafHelper(node.getLeft(), path, finalList);
+            rootToLeafHelper(node.getRight(), path, finalList);
+        }
+        path.remove(path.size() - 1);
+    }
+
+//    @Test
+//    void testRootToPaths() {
+//         Integer [] inorder = {0, 1, 2, 3, 4, 5, 6, 7, 8};
+//         Integer [] preorder = {5, 1, 0, 4, 2, 3, 7, 6, 8};
+//         LinkedBinaryTree <Integer > bt = new LinkedBinaryTree <>();
+//         bt.construct(inorder , preorder);
+//
+//         System.out.println(bt.toBinaryTreeString());
+//
+//         assertEquals("[[5, 1, 0], [5, 1, 4, 2, 3], [5, 7, 6], [5, 7, 8]]", bt.rootToLeafPaths().toString());
+//    }
+
+    //END ADDED METHODS
 
     public String toBinaryTreeString() {
         BinaryTreePrinter<E> btp = new BinaryTreePrinter<>(this);
