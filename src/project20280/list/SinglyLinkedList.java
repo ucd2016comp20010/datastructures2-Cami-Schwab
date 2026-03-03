@@ -8,7 +8,8 @@ public class SinglyLinkedList<E> implements List<E> {
 
     private static class Node<E> {
 
-        private final E element;            // reference to the element stored at this node
+        //private final E element;            // reference to the element stored at this node
+        private E element;
 
         /**
          * A reference to the subsequent node in the list
@@ -55,6 +56,10 @@ public class SinglyLinkedList<E> implements List<E> {
          */
         public void setNext(Node<E> n) {
             this.next = n;
+        }
+
+        public void setElement(E e) {
+            this.element = e;
         }
     } //----------- end of nested Node class -----------
 
@@ -292,6 +297,59 @@ public class SinglyLinkedList<E> implements List<E> {
 //        return twin;
 //    }
 
+    //recursion assignment Q6 (added setter for element above)
+
+    public void reverse() {
+        int fwd = 0;
+        int bck = this.size()-1;
+        reverseHelper(fwd, bck);
+    }
+
+    private void reverseHelper(int fwd, int bck) {
+        if (fwd >= bck) {
+            return;
+        }
+        Node<E> first = head;
+        for(int i = 0; i < fwd; i++) {
+            first = first.getNext();
+        }
+        Node<E> last = head;
+        for(int i = 0; i < bck; i++) {
+            last = last.getNext();
+        }
+        E temp = first.getElement();
+        first.setElement(last.getElement());
+        last.setElement(temp);
+        reverseHelper(fwd+1, bck-1);
+    }
+    // OR SWAPPING POINTERS:
+//    public void reverse() {
+//        head = reverseHelper(head, null);
+//    }
+//
+//    private Node<E> reverseHelper(Node<E> curr, Node<E> prev) {
+//        if (curr == null) return prev;
+//
+//        Node<E> next = curr.getNext();
+//        curr.setNext(prev);
+//        return reverseHelper(next, curr);
+//    }
+
+    //recursion assignment Q7
+
+    public SinglyLinkedList<E> recursiveCopy() {
+        SinglyLinkedList<E> returned = new SinglyLinkedList<>();
+        recursiveCopyHelper(returned, this.head);
+        return returned;
+    }
+
+    private void recursiveCopyHelper(SinglyLinkedList<E> returned, Node<E> head) {
+        if(head == null) {
+            return;
+        }
+        returned.addLast(head.getElement());
+        recursiveCopyHelper(returned, head.getNext());
+    }
 
     //@Override
     public Iterator<E> iterator() {
