@@ -43,32 +43,37 @@ public class HeapPriorityQueue<K, V> extends AbstractPriorityQueue<K, V> {
      * @param values an array of the initial values for the priority queue
      */
     public HeapPriorityQueue(K[] keys, V[] values) {
-        // TODO
+        for(int i = 0; i < keys.length; i++) {
+            Entry<K, V> added = new PQEntry<>(keys[i], values[i]);
+            heap.add(added);
+        }
+        heapify();
     }
 
     // protected utilities
     protected int parent(int j) {
-        // TODO
-        return 0;
+        return (int)((j-1))/2;
     }
 
     protected int left(int j) {
-        // TODO
-        return 0;
+        return 2j+1;
     }
 
     protected int right(int j) {
-        // TODO
-        return 0;
+        return 2j+2;
     }
 
     protected boolean hasLeft(int j) {
-        // TODO
+        if(left(j) < size()) {
+            return true;
+        }
         return false;
     }
 
     protected boolean hasRight(int j) {
-        // TODO
+        if(right(j) < size()) {
+            return true;
+        }
         return false;
     }
 
@@ -76,7 +81,9 @@ public class HeapPriorityQueue<K, V> extends AbstractPriorityQueue<K, V> {
      * Exchanges the entries at indices i and j of the array list.
      */
     protected void swap(int i, int j) {
-        // TODO
+        PQEntry<K, V> temp = heap.get(j);
+        heap.set(j, heap.get(i));
+        heap.set(i, temp);
     }
 
     /**
@@ -84,21 +91,29 @@ public class HeapPriorityQueue<K, V> extends AbstractPriorityQueue<K, V> {
      * property.
      */
     protected void upheap(int j) {
-        // TODO
+        while(compare(heap.get(j), heap.get(parent(j))) < 0) {
+            swap(j, parent(j));
+            j = parent(j);
+        }
     }
 
     /**
      * Moves the entry at index j lower, if necessary, to restore the heap property.
      */
     protected void downheap(int j) {
-        // TODO
+        while(compare(heap.get(j), heap.get(left(j))) >= 0) {
+            swap(j, left(j));
+            j = left(j);
+        }
     }
 
     /**
      * Performs a bottom-up construction of the heap in linear time.
      */
     protected void heapify() {
-        // TODO
+        //TODO
+        for()
+        upheap(heap.size()-1);
     }
 
     // public methods
