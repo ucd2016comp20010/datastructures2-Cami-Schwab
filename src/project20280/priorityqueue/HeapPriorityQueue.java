@@ -172,10 +172,22 @@ public class HeapPriorityQueue<K, V> extends AbstractPriorityQueue<K, V> {
      */
     @Override
     public Entry<K, V> removeMin() {
+//        Entry<K, V> removed = heap.get(0);
+//        Entry<K, V> moved = heap.get(size()-1);
+//        heap.set(0, moved);
+//        heap.remove(size()-1);
+//        downheap(0);
+//        return removed;
+        if (heap.isEmpty()) {
+            return null;
+        }
         Entry<K, V> removed = heap.get(0);
-        Entry<K, V> moved = heap.get(size()-1);
-        heap.set(0, moved);
-        heap.remove(size()-1);
+        if (size() == 1) {
+            heap.remove(0);
+            return removed;
+        }
+        heap.set(0, heap.get(size() - 1));
+        heap.remove(size() - 1);
         downheap(0);
         return removed;
     }
