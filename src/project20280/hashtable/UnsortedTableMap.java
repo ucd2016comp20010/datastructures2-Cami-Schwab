@@ -2,6 +2,7 @@ package project20280.hashtable;
 
 import project20280.interfaces.AbstractMap;
 import project20280.interfaces.Entry;
+import project20280.list.DoublyLinkedList;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -29,8 +30,13 @@ public class UnsortedTableMap<K, V> extends AbstractMap<K, V> {
      * Returns the index of an entry with equal key, or -1 if none found.
      */
     private int findIndex(K key) {
-        // TODO
-        return 0;
+        for (int i = 0; i < table.size(); i++) {
+            MapEntry<K, V> entry = table.get(i);
+            if (entry.getKey().equals(key)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     // public methods
@@ -54,7 +60,12 @@ public class UnsortedTableMap<K, V> extends AbstractMap<K, V> {
      */
     @Override
     public V get(K key) {
-        // TODO
+        for (int i = 0; i < table.size(); i++) {
+            MapEntry<K, V> entry = table.get(i);
+            if (entry.getKey().equals(key)) {
+                return entry.getValue();
+            }
+        }
         return null;
     }
 
@@ -70,8 +81,16 @@ public class UnsortedTableMap<K, V> extends AbstractMap<K, V> {
      */
     @Override
     public V put(K key, V value) {
-        // TODO
-        return null;
+        int i = findIndex(key);
+        if (i==-1) {
+            table.add(new MapEntry<>(key, value));
+            return null;
+        }
+        else {
+            V old = table.get(i).getValue();
+            table.get(i).setValue(value);
+            return old;
+        }
     }
 
     /**
@@ -84,8 +103,11 @@ public class UnsortedTableMap<K, V> extends AbstractMap<K, V> {
      */
     @Override
     public V remove(K key) {
-        // TODO
-        return null;
+        int i = findIndex(key);
+        if (i == -1) return null;
+        V removed = table.get(i).getValue();
+        table.remove(i);
+        return removed;
     }
 
     // ---------------- nested EntryIterator class ----------------
