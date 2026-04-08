@@ -36,20 +36,36 @@ public class ProbeHashMap<K, V> extends AbstractHashMap<K, V> {
 
     @Override
     protected V bucketGet(int h, K k) {
-        // TODO
-        return null;
+        int j = findSlot(h, k);
+        if (j < 0) {
+            return null;
+        }
+        return table[j].getValue();
     }
 
     @Override
     protected V bucketPut(int h, K k, V v) {
-        // TODO
+        int j = findSlot(h, k);
+        if (j >= 0) {
+            return table[j].setValue(v);
+        }
+
+        int avail = -(j + 1);
+        table[avail] = new MapEntry<>(k, v);
+        n++;
         return null;
     }
 
     @Override
     protected V bucketRemove(int h, K k) {
-        // TODO
-        return null;
+        int j = findSlot(h, k);
+        if (j < 0) {
+            return null;
+        }
+        V answer = table[j].getValue();
+        table[j] = DEFUNCT;
+        n--;
+        return answer;
     }
 
     @Override
